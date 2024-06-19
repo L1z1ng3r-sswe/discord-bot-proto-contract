@@ -1,0 +1,49 @@
+syntax="proto3";
+
+
+package discord_bot_v1;
+
+
+option go_package = "github.com/L1z1ng3r-sswe/discord-bot-proto-contract/discord_bot_v1;discord_bot_v1";
+
+service DiscordBot {
+  rpc CreateTournament(CreateTournamentRequest) returns (CreateTournamentResponse);
+  rpc AddModerator(AddModeratorRequest) returns (AddModeratorResponse);
+  rpc DeleteTournament(DeleteTournamentRequest) returns (DeleteTournamentResponse);
+  rpc AddServers(AddServersRequest) returns (AddServersResponse);
+}
+
+message CreateTournamentRequest {
+  string tournament_id = 1;
+  string user_id_1 = 2;
+  string user_id_2 = 3;
+}
+
+message CreateTournamentResponse {
+  string invite_link_to_server = 1;
+}
+
+message AddModeratorRequest {
+  string tournament_id = 1;
+}
+
+message AddModeratorResponse {
+  string link_to_server = 1;
+}
+
+message DeleteTournamentRequest {
+  string tournament_id = 1;
+}
+
+message DeleteTournamentResponse {
+  string message = 1;
+}
+
+message AddServersRequest {
+  repeated string servers = 1;
+}
+
+message AddServersResponse {
+  string message = 1;
+}
+
