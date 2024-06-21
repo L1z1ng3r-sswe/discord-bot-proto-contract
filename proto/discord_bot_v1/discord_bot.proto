@@ -1,17 +1,22 @@
 syntax="proto3";
 
 
-package discord_bot_v1;
+package tournaments_v1;
 
 
 option go_package = "github.com/L1z1ng3r-sswe/discord-bot-proto-contract/discord_bot_v1;discord_bot_v1";
 
-service DiscordBot {
+service Tournaments {
   rpc CreateTournament(CreateTournamentRequest) returns (CreateTournamentResponse);
-  rpc AddModerator(AddModeratorRequest) returns (AddModeratorResponse);
   rpc DeleteTournament(DeleteTournamentRequest) returns (DeleteTournamentResponse);
+  rpc GetChannelURL(GetChannelURLRequest) returns (GetChannelURLResponse);
+}
+
+service DiscordManager {
   rpc AddServers(AddServersRequest) returns (AddServersResponse);
 }
+
+// tournaments start --------------------------------------------------
 
 message CreateTournamentRequest {
   string tournament_id = 1;
@@ -23,11 +28,11 @@ message CreateTournamentResponse {
   string invite_link_to_server = 1;
 }
 
-message AddModeratorRequest {
+message GetChannelURLRequest {
   string tournament_id = 1;
 }
 
-message AddModeratorResponse {
+message GetChannelURLResponse {
   string link_to_server = 1;
 }
 
@@ -38,6 +43,8 @@ message DeleteTournamentRequest {
 message DeleteTournamentResponse {
   string message = 1;
 }
+
+// discord manager-----------------------------------------------------
 
 message AddServersRequest {
   repeated string servers = 1;

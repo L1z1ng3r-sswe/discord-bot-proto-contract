@@ -18,194 +18,244 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// DiscordBotClient is the client API for DiscordBot service.
+// TournamentsClient is the client API for Tournaments service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DiscordBotClient interface {
+type TournamentsClient interface {
 	CreateTournament(ctx context.Context, in *CreateTournamentRequest, opts ...grpc.CallOption) (*CreateTournamentResponse, error)
 	AddModerator(ctx context.Context, in *AddModeratorRequest, opts ...grpc.CallOption) (*AddModeratorResponse, error)
 	DeleteTournament(ctx context.Context, in *DeleteTournamentRequest, opts ...grpc.CallOption) (*DeleteTournamentResponse, error)
-	AddServers(ctx context.Context, in *AddServersRequest, opts ...grpc.CallOption) (*AddServersResponse, error)
 }
 
-type discordBotClient struct {
+type tournamentsClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewDiscordBotClient(cc grpc.ClientConnInterface) DiscordBotClient {
-	return &discordBotClient{cc}
+func NewTournamentsClient(cc grpc.ClientConnInterface) TournamentsClient {
+	return &tournamentsClient{cc}
 }
 
-func (c *discordBotClient) CreateTournament(ctx context.Context, in *CreateTournamentRequest, opts ...grpc.CallOption) (*CreateTournamentResponse, error) {
+func (c *tournamentsClient) CreateTournament(ctx context.Context, in *CreateTournamentRequest, opts ...grpc.CallOption) (*CreateTournamentResponse, error) {
 	out := new(CreateTournamentResponse)
-	err := c.cc.Invoke(ctx, "/discord_bot_v1.DiscordBot/CreateTournament", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tournaments_v1.Tournaments/CreateTournament", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *discordBotClient) AddModerator(ctx context.Context, in *AddModeratorRequest, opts ...grpc.CallOption) (*AddModeratorResponse, error) {
+func (c *tournamentsClient) AddModerator(ctx context.Context, in *AddModeratorRequest, opts ...grpc.CallOption) (*AddModeratorResponse, error) {
 	out := new(AddModeratorResponse)
-	err := c.cc.Invoke(ctx, "/discord_bot_v1.DiscordBot/AddModerator", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tournaments_v1.Tournaments/AddModerator", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *discordBotClient) DeleteTournament(ctx context.Context, in *DeleteTournamentRequest, opts ...grpc.CallOption) (*DeleteTournamentResponse, error) {
+func (c *tournamentsClient) DeleteTournament(ctx context.Context, in *DeleteTournamentRequest, opts ...grpc.CallOption) (*DeleteTournamentResponse, error) {
 	out := new(DeleteTournamentResponse)
-	err := c.cc.Invoke(ctx, "/discord_bot_v1.DiscordBot/DeleteTournament", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/tournaments_v1.Tournaments/DeleteTournament", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *discordBotClient) AddServers(ctx context.Context, in *AddServersRequest, opts ...grpc.CallOption) (*AddServersResponse, error) {
-	out := new(AddServersResponse)
-	err := c.cc.Invoke(ctx, "/discord_bot_v1.DiscordBot/AddServers", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// DiscordBotServer is the server API for DiscordBot service.
-// All implementations must embed UnimplementedDiscordBotServer
+// TournamentsServer is the server API for Tournaments service.
+// All implementations must embed UnimplementedTournamentsServer
 // for forward compatibility
-type DiscordBotServer interface {
+type TournamentsServer interface {
 	CreateTournament(context.Context, *CreateTournamentRequest) (*CreateTournamentResponse, error)
 	AddModerator(context.Context, *AddModeratorRequest) (*AddModeratorResponse, error)
 	DeleteTournament(context.Context, *DeleteTournamentRequest) (*DeleteTournamentResponse, error)
-	AddServers(context.Context, *AddServersRequest) (*AddServersResponse, error)
-	mustEmbedUnimplementedDiscordBotServer()
+	mustEmbedUnimplementedTournamentsServer()
 }
 
-// UnimplementedDiscordBotServer must be embedded to have forward compatible implementations.
-type UnimplementedDiscordBotServer struct {
+// UnimplementedTournamentsServer must be embedded to have forward compatible implementations.
+type UnimplementedTournamentsServer struct {
 }
 
-func (UnimplementedDiscordBotServer) CreateTournament(context.Context, *CreateTournamentRequest) (*CreateTournamentResponse, error) {
+func (UnimplementedTournamentsServer) CreateTournament(context.Context, *CreateTournamentRequest) (*CreateTournamentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTournament not implemented")
 }
-func (UnimplementedDiscordBotServer) AddModerator(context.Context, *AddModeratorRequest) (*AddModeratorResponse, error) {
+func (UnimplementedTournamentsServer) AddModerator(context.Context, *AddModeratorRequest) (*AddModeratorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddModerator not implemented")
 }
-func (UnimplementedDiscordBotServer) DeleteTournament(context.Context, *DeleteTournamentRequest) (*DeleteTournamentResponse, error) {
+func (UnimplementedTournamentsServer) DeleteTournament(context.Context, *DeleteTournamentRequest) (*DeleteTournamentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTournament not implemented")
 }
-func (UnimplementedDiscordBotServer) AddServers(context.Context, *AddServersRequest) (*AddServersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddServers not implemented")
-}
-func (UnimplementedDiscordBotServer) mustEmbedUnimplementedDiscordBotServer() {}
+func (UnimplementedTournamentsServer) mustEmbedUnimplementedTournamentsServer() {}
 
-// UnsafeDiscordBotServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DiscordBotServer will
+// UnsafeTournamentsServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TournamentsServer will
 // result in compilation errors.
-type UnsafeDiscordBotServer interface {
-	mustEmbedUnimplementedDiscordBotServer()
+type UnsafeTournamentsServer interface {
+	mustEmbedUnimplementedTournamentsServer()
 }
 
-func RegisterDiscordBotServer(s grpc.ServiceRegistrar, srv DiscordBotServer) {
-	s.RegisterService(&DiscordBot_ServiceDesc, srv)
+func RegisterTournamentsServer(s grpc.ServiceRegistrar, srv TournamentsServer) {
+	s.RegisterService(&Tournaments_ServiceDesc, srv)
 }
 
-func _DiscordBot_CreateTournament_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Tournaments_CreateTournament_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTournamentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiscordBotServer).CreateTournament(ctx, in)
+		return srv.(TournamentsServer).CreateTournament(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/discord_bot_v1.DiscordBot/CreateTournament",
+		FullMethod: "/tournaments_v1.Tournaments/CreateTournament",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscordBotServer).CreateTournament(ctx, req.(*CreateTournamentRequest))
+		return srv.(TournamentsServer).CreateTournament(ctx, req.(*CreateTournamentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DiscordBot_AddModerator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Tournaments_AddModerator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddModeratorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiscordBotServer).AddModerator(ctx, in)
+		return srv.(TournamentsServer).AddModerator(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/discord_bot_v1.DiscordBot/AddModerator",
+		FullMethod: "/tournaments_v1.Tournaments/AddModerator",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscordBotServer).AddModerator(ctx, req.(*AddModeratorRequest))
+		return srv.(TournamentsServer).AddModerator(ctx, req.(*AddModeratorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DiscordBot_DeleteTournament_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Tournaments_DeleteTournament_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteTournamentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiscordBotServer).DeleteTournament(ctx, in)
+		return srv.(TournamentsServer).DeleteTournament(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/discord_bot_v1.DiscordBot/DeleteTournament",
+		FullMethod: "/tournaments_v1.Tournaments/DeleteTournament",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscordBotServer).DeleteTournament(ctx, req.(*DeleteTournamentRequest))
+		return srv.(TournamentsServer).DeleteTournament(ctx, req.(*DeleteTournamentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DiscordBot_AddServers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+// Tournaments_ServiceDesc is the grpc.ServiceDesc for Tournaments service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Tournaments_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "tournaments_v1.Tournaments",
+	HandlerType: (*TournamentsServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateTournament",
+			Handler:    _Tournaments_CreateTournament_Handler,
+		},
+		{
+			MethodName: "AddModerator",
+			Handler:    _Tournaments_AddModerator_Handler,
+		},
+		{
+			MethodName: "DeleteTournament",
+			Handler:    _Tournaments_DeleteTournament_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "discord_bot.proto",
+}
+
+// DiscordManagerClient is the client API for DiscordManager service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type DiscordManagerClient interface {
+	AddServers(ctx context.Context, in *AddServersRequest, opts ...grpc.CallOption) (*AddServersResponse, error)
+}
+
+type discordManagerClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewDiscordManagerClient(cc grpc.ClientConnInterface) DiscordManagerClient {
+	return &discordManagerClient{cc}
+}
+
+func (c *discordManagerClient) AddServers(ctx context.Context, in *AddServersRequest, opts ...grpc.CallOption) (*AddServersResponse, error) {
+	out := new(AddServersResponse)
+	err := c.cc.Invoke(ctx, "/tournaments_v1.DiscordManager/AddServers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DiscordManagerServer is the server API for DiscordManager service.
+// All implementations must embed UnimplementedDiscordManagerServer
+// for forward compatibility
+type DiscordManagerServer interface {
+	AddServers(context.Context, *AddServersRequest) (*AddServersResponse, error)
+	mustEmbedUnimplementedDiscordManagerServer()
+}
+
+// UnimplementedDiscordManagerServer must be embedded to have forward compatible implementations.
+type UnimplementedDiscordManagerServer struct {
+}
+
+func (UnimplementedDiscordManagerServer) AddServers(context.Context, *AddServersRequest) (*AddServersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddServers not implemented")
+}
+func (UnimplementedDiscordManagerServer) mustEmbedUnimplementedDiscordManagerServer() {}
+
+// UnsafeDiscordManagerServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DiscordManagerServer will
+// result in compilation errors.
+type UnsafeDiscordManagerServer interface {
+	mustEmbedUnimplementedDiscordManagerServer()
+}
+
+func RegisterDiscordManagerServer(s grpc.ServiceRegistrar, srv DiscordManagerServer) {
+	s.RegisterService(&DiscordManager_ServiceDesc, srv)
+}
+
+func _DiscordManager_AddServers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddServersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiscordBotServer).AddServers(ctx, in)
+		return srv.(DiscordManagerServer).AddServers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/discord_bot_v1.DiscordBot/AddServers",
+		FullMethod: "/tournaments_v1.DiscordManager/AddServers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscordBotServer).AddServers(ctx, req.(*AddServersRequest))
+		return srv.(DiscordManagerServer).AddServers(ctx, req.(*AddServersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// DiscordBot_ServiceDesc is the grpc.ServiceDesc for DiscordBot service.
+// DiscordManager_ServiceDesc is the grpc.ServiceDesc for DiscordManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var DiscordBot_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "discord_bot_v1.DiscordBot",
-	HandlerType: (*DiscordBotServer)(nil),
+var DiscordManager_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "tournaments_v1.DiscordManager",
+	HandlerType: (*DiscordManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateTournament",
-			Handler:    _DiscordBot_CreateTournament_Handler,
-		},
-		{
-			MethodName: "AddModerator",
-			Handler:    _DiscordBot_AddModerator_Handler,
-		},
-		{
-			MethodName: "DeleteTournament",
-			Handler:    _DiscordBot_DeleteTournament_Handler,
-		},
-		{
 			MethodName: "AddServers",
-			Handler:    _DiscordBot_AddServers_Handler,
+			Handler:    _DiscordManager_AddServers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
