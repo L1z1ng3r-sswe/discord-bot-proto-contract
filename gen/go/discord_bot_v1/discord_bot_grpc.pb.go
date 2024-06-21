@@ -23,8 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TournamentsClient interface {
 	CreateTournament(ctx context.Context, in *CreateTournamentRequest, opts ...grpc.CallOption) (*CreateTournamentResponse, error)
-	AddModerator(ctx context.Context, in *AddModeratorRequest, opts ...grpc.CallOption) (*AddModeratorResponse, error)
 	DeleteTournament(ctx context.Context, in *DeleteTournamentRequest, opts ...grpc.CallOption) (*DeleteTournamentResponse, error)
+	GetChannelURL(ctx context.Context, in *GetChannelURLRequest, opts ...grpc.CallOption) (*GetChannelURLResponse, error)
 }
 
 type tournamentsClient struct {
@@ -44,18 +44,18 @@ func (c *tournamentsClient) CreateTournament(ctx context.Context, in *CreateTour
 	return out, nil
 }
 
-func (c *tournamentsClient) AddModerator(ctx context.Context, in *AddModeratorRequest, opts ...grpc.CallOption) (*AddModeratorResponse, error) {
-	out := new(AddModeratorResponse)
-	err := c.cc.Invoke(ctx, "/tournaments_v1.Tournaments/AddModerator", in, out, opts...)
+func (c *tournamentsClient) DeleteTournament(ctx context.Context, in *DeleteTournamentRequest, opts ...grpc.CallOption) (*DeleteTournamentResponse, error) {
+	out := new(DeleteTournamentResponse)
+	err := c.cc.Invoke(ctx, "/tournaments_v1.Tournaments/DeleteTournament", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *tournamentsClient) DeleteTournament(ctx context.Context, in *DeleteTournamentRequest, opts ...grpc.CallOption) (*DeleteTournamentResponse, error) {
-	out := new(DeleteTournamentResponse)
-	err := c.cc.Invoke(ctx, "/tournaments_v1.Tournaments/DeleteTournament", in, out, opts...)
+func (c *tournamentsClient) GetChannelURL(ctx context.Context, in *GetChannelURLRequest, opts ...grpc.CallOption) (*GetChannelURLResponse, error) {
+	out := new(GetChannelURLResponse)
+	err := c.cc.Invoke(ctx, "/tournaments_v1.Tournaments/GetChannelURL", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,8 +67,8 @@ func (c *tournamentsClient) DeleteTournament(ctx context.Context, in *DeleteTour
 // for forward compatibility
 type TournamentsServer interface {
 	CreateTournament(context.Context, *CreateTournamentRequest) (*CreateTournamentResponse, error)
-	AddModerator(context.Context, *AddModeratorRequest) (*AddModeratorResponse, error)
 	DeleteTournament(context.Context, *DeleteTournamentRequest) (*DeleteTournamentResponse, error)
+	GetChannelURL(context.Context, *GetChannelURLRequest) (*GetChannelURLResponse, error)
 	mustEmbedUnimplementedTournamentsServer()
 }
 
@@ -79,11 +79,11 @@ type UnimplementedTournamentsServer struct {
 func (UnimplementedTournamentsServer) CreateTournament(context.Context, *CreateTournamentRequest) (*CreateTournamentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTournament not implemented")
 }
-func (UnimplementedTournamentsServer) AddModerator(context.Context, *AddModeratorRequest) (*AddModeratorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddModerator not implemented")
-}
 func (UnimplementedTournamentsServer) DeleteTournament(context.Context, *DeleteTournamentRequest) (*DeleteTournamentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTournament not implemented")
+}
+func (UnimplementedTournamentsServer) GetChannelURL(context.Context, *GetChannelURLRequest) (*GetChannelURLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChannelURL not implemented")
 }
 func (UnimplementedTournamentsServer) mustEmbedUnimplementedTournamentsServer() {}
 
@@ -116,24 +116,6 @@ func _Tournaments_CreateTournament_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Tournaments_AddModerator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddModeratorRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TournamentsServer).AddModerator(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/tournaments_v1.Tournaments/AddModerator",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TournamentsServer).AddModerator(ctx, req.(*AddModeratorRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Tournaments_DeleteTournament_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteTournamentRequest)
 	if err := dec(in); err != nil {
@@ -152,6 +134,24 @@ func _Tournaments_DeleteTournament_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tournaments_GetChannelURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChannelURLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TournamentsServer).GetChannelURL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/tournaments_v1.Tournaments/GetChannelURL",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TournamentsServer).GetChannelURL(ctx, req.(*GetChannelURLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tournaments_ServiceDesc is the grpc.ServiceDesc for Tournaments service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -164,12 +164,12 @@ var Tournaments_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Tournaments_CreateTournament_Handler,
 		},
 		{
-			MethodName: "AddModerator",
-			Handler:    _Tournaments_AddModerator_Handler,
-		},
-		{
 			MethodName: "DeleteTournament",
 			Handler:    _Tournaments_DeleteTournament_Handler,
+		},
+		{
+			MethodName: "GetChannelURL",
+			Handler:    _Tournaments_GetChannelURL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
