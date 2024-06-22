@@ -180,7 +180,7 @@ var Tournaments_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DiscordManagerClient interface {
-	AddServers(ctx context.Context, in *AddServersRequest, opts ...grpc.CallOption) (*AddServersResponse, error)
+	AddDiscordServers(ctx context.Context, in *AddDiscordServersRequest, opts ...grpc.CallOption) (*AddDiscordServersResponse, error)
 }
 
 type discordManagerClient struct {
@@ -191,9 +191,9 @@ func NewDiscordManagerClient(cc grpc.ClientConnInterface) DiscordManagerClient {
 	return &discordManagerClient{cc}
 }
 
-func (c *discordManagerClient) AddServers(ctx context.Context, in *AddServersRequest, opts ...grpc.CallOption) (*AddServersResponse, error) {
-	out := new(AddServersResponse)
-	err := c.cc.Invoke(ctx, "/tournaments_v1.DiscordManager/AddServers", in, out, opts...)
+func (c *discordManagerClient) AddDiscordServers(ctx context.Context, in *AddDiscordServersRequest, opts ...grpc.CallOption) (*AddDiscordServersResponse, error) {
+	out := new(AddDiscordServersResponse)
+	err := c.cc.Invoke(ctx, "/tournaments_v1.DiscordManager/AddDiscordServers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -204,7 +204,7 @@ func (c *discordManagerClient) AddServers(ctx context.Context, in *AddServersReq
 // All implementations must embed UnimplementedDiscordManagerServer
 // for forward compatibility
 type DiscordManagerServer interface {
-	AddServers(context.Context, *AddServersRequest) (*AddServersResponse, error)
+	AddDiscordServers(context.Context, *AddDiscordServersRequest) (*AddDiscordServersResponse, error)
 	mustEmbedUnimplementedDiscordManagerServer()
 }
 
@@ -212,8 +212,8 @@ type DiscordManagerServer interface {
 type UnimplementedDiscordManagerServer struct {
 }
 
-func (UnimplementedDiscordManagerServer) AddServers(context.Context, *AddServersRequest) (*AddServersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddServers not implemented")
+func (UnimplementedDiscordManagerServer) AddDiscordServers(context.Context, *AddDiscordServersRequest) (*AddDiscordServersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddDiscordServers not implemented")
 }
 func (UnimplementedDiscordManagerServer) mustEmbedUnimplementedDiscordManagerServer() {}
 
@@ -228,20 +228,20 @@ func RegisterDiscordManagerServer(s grpc.ServiceRegistrar, srv DiscordManagerSer
 	s.RegisterService(&DiscordManager_ServiceDesc, srv)
 }
 
-func _DiscordManager_AddServers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddServersRequest)
+func _DiscordManager_AddDiscordServers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddDiscordServersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DiscordManagerServer).AddServers(ctx, in)
+		return srv.(DiscordManagerServer).AddDiscordServers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/tournaments_v1.DiscordManager/AddServers",
+		FullMethod: "/tournaments_v1.DiscordManager/AddDiscordServers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DiscordManagerServer).AddServers(ctx, req.(*AddServersRequest))
+		return srv.(DiscordManagerServer).AddDiscordServers(ctx, req.(*AddDiscordServersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -254,8 +254,8 @@ var DiscordManager_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DiscordManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AddServers",
-			Handler:    _DiscordManager_AddServers_Handler,
+			MethodName: "AddDiscordServers",
+			Handler:    _DiscordManager_AddDiscordServers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

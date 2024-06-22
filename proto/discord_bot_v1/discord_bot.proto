@@ -13,7 +13,7 @@ service Tournaments {
 }
 
 service DiscordManager {
-  rpc AddServers(AddServersRequest) returns (AddServersResponse);
+  rpc AddDiscordServers(AddDiscordServersRequest) returns (AddDiscordServersResponse);
 }
 
 // tournaments start --------------------------------------------------
@@ -33,7 +33,7 @@ message GetChannelURLRequest {
 }
 
 message GetChannelURLResponse {
-  string link_to_server = 1;
+  string channel_url = 1;
 }
 
 message DeleteTournamentRequest {
@@ -46,11 +46,11 @@ message DeleteTournamentResponse {
 
 // discord manager-----------------------------------------------------
 
-message AddServersRequest {
+message AddDiscordServersRequest {
   repeated string servers = 1;
 }
 
-message AddServersResponse {
+message AddDiscordServersResponse {
   string message = 1;
 }
 
